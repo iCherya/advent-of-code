@@ -41,15 +41,20 @@ function traverseDirection(start, direction, grid) {
     let [s1, s2] = start;
     const [e1, e2] = direction;
 
-    s1 += e1;
-    s2 += e2;
+    while (grid[s1][s2]) {
+        s1 += e1;
+        s2 += e2;
+        const next = grid[s1][s2];
+        if (next !== '.') {
+            return grid[s1][s2];
+        }
+    }
 
-    return grid[s1][s2];
+    return null;
 }
 
 function getVisibleSeats(seat, grid) {
     const visible = [];
-
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
             if (i === 0 && j === 0) {
@@ -82,7 +87,7 @@ function round(grid) {
             } else if (seat === '#') {
                 const occupied = calculateOccupiedSeats(visibleSeats);
 
-                if (occupied >= 4) {
+                if (occupied >= 5) {
                     seat = 'L';
                 }
             }
@@ -137,4 +142,4 @@ function solve(fileName) {
     return result;
 }
 
-console.log(solve('input.txt')); // 2263
+console.log(solve('input.txt')); // 2002
