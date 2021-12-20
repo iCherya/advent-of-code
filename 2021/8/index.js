@@ -5,7 +5,9 @@ const prepareInput = (arr) =>
   arr.map((line) => {
     const [left, right] = line
       .split(' | ')
-      .map((part) => part.split(' ').map((letters) => letters.split('').sort().join('')));
+      .map((part) =>
+        part.split(' ').map((letters) => letters.split('').sort().join(''))
+      );
 
     return { left, right };
   });
@@ -29,18 +31,30 @@ const task2 = (data) => {
       1: left.find((x) => x.length === 2),
       4: left.find((x) => x.length === 4),
       7: left.find((x) => x.length === 3),
-      8: left.find((x) => x.length === 7),
+      8: left.find((x) => x.length === 7)
     };
 
     digits[6] = left.find((x) => x.length === 6 && !includes(x, digits[1]));
-    digits[9] = left.find((x) => x.length === 6 && x !== digits[6] && includes(x, digits[4]));
-    digits[0] = left.find((x) => x.length === 6 && x !== digits[6] && x !== digits[9]);
+    digits[9] = left.find(
+      (x) => x.length === 6 && x !== digits[6] && includes(x, digits[4])
+    );
+    digits[0] = left.find(
+      (x) => x.length === 6 && x !== digits[6] && x !== digits[9]
+    );
     digits[3] = left.find((x) => x.length === 5 && includes(x, digits[1]));
-    digits[5] = left.find((x) => x.length === 5 && x !== digits[3] && includes(digits[6], x));
-    digits[2] = left.find((x) => x.length === 5 && x !== digits[3] && x !== digits[5]);
+    digits[5] = left.find(
+      (x) => x.length === 5 && x !== digits[3] && includes(digits[6], x)
+    );
+    digits[2] = left.find(
+      (x) => x.length === 5 && x !== digits[3] && x !== digits[5]
+    );
 
-    const translationTable = Object.fromEntries(Object.entries(digits).map((x) => x.reverse()));
-    const translated = Number(right.map((signal) => translationTable[signal]).join``);
+    const translationTable = Object.fromEntries(
+      Object.entries(digits).map((x) => x.reverse())
+    );
+    const translated = Number(
+      right.map((signal) => translationTable[signal]).join``
+    );
 
     counter += translated;
   }
@@ -49,4 +63,4 @@ const task2 = (data) => {
 };
 
 const preparedData = prepareInput(inputArray);
-console.log(task1(preparedData), task2(preparedData));
+console.log(task1(preparedData), task2(preparedData)); // 355, 983030
